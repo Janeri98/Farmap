@@ -1,83 +1,49 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Header from '../components/Header';
-import ProductCard from '../components/ProductCard';
-import { Product } from '../models/Product';
+import { Ionicons } from '@expo/vector-icons';
 
 interface ProductsScreenProps {
   navigation: any;
 }
 
 const ProductsScreen: React.FC<ProductsScreenProps> = ({ navigation }) => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  
-  // Datos de ejemplo - en una app real vendrían de una API
-  const products: Product[] = [
-    {
-      id: '1',
-      name: 'Paracetamol 500mg',
-      description: 'Analgésico y antipirético para aliviar el dolor y reducir la fiebre',
-      price: 5.99,
-      category: 'medicamentos',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: '2',
-      name: 'Ibuprofeno 400mg',
-      description: 'Antiinflamatorio no esteroideo para aliviar el dolor y la inflamación',
-      price: 7.50,
-      category: 'medicamentos',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: '3',
-      name: 'Vitamina C 1000mg',
-      description: 'Suplemento vitamínico para fortalecer el sistema inmunológico',
-      price: 12.99,
-      category: 'suplementos',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: '4',
-      name: 'Jarabe para la tos',
-      description: 'Alivia la tos seca y productiva, con efecto expectorante',
-      price: 8.75,
-      category: 'medicamentos',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: '5',
-      name: 'Termómetro digital',
-      description: 'Termómetro digital de alta precisión con pantalla LCD',
-      price: 15.99,
-      category: 'dispositivos',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: '6',
-      name: 'Curitas adhesivas',
-      description: 'Caja de 100 curitas para protección de heridas leves',
-      price: 3.50,
-      category: 'primeros-auxilios',
-      image: 'https://via.placeholder.com/150'
-    },
-  ];
+  // Lista de productos de farmacia en orden alfabético
+  const products = [
+    'Acetaminofén 500mg',
+    'Alcohol etílico 70%',
+    'Amoxicilina 500mg',
+    'Aspirina 100mg',
+    'Atorvastatina 20mg',
+    'Banda adhesiva (Curitas)',
+    'Clonazepam 2mg',
+    'Desloratadina 5mg',
+    'Diazepam 5mg',
+    'Digoxina 0.25mg',
+    'Donepezilo 5mg',
+    'Esparadrapo',
+    'Gasas estériles',
+    'Gel antiinflamatorio',
+    'Guantes de látex',
+    'Ibuprofeno 400mg',
+    'Insulina NPH',
+    'Jarabe para la tos',
+    'Lansoprazol 30mg',
+    'Losartán 50mg',
+    'Metformina 500mg',
+    'Metronidazol 250mg',
+    'Omeprazol 20mg',
+    'Paracetamol 500mg',
+    'Prednisona 5mg',
+    'Sales de rehidratación oral',
+    'Salbutamol inhalador',
+    'Termómetro digital',
+    'Vitamina C 1000mg',
+    'Vitamina D3 1000UI'
+  ].sort(); // Orden alfabético
 
-  const categories = [
-    { id: 'all', name: 'Todos' },
-    { id: 'medicamentos', name: 'Medicamentos' },
-    { id: 'suplementos', name: 'Suplementos' },
-    { id: 'dispositivos', name: 'Dispositivos' },
-    { id: 'primeros-auxilios', name: 'Primeros Auxilios' },
-  ];
-
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
-    : products.filter(product => product.category === selectedCategory);
-
-  const handleAddToCart = (product: Product) => {
-    // Aquí iría la lógica para agregar al carrito
-    alert(`Producto consultado: ${product.name}`);
+  const handleConsult = (productName: string) => {
+    alert(`Producto consultado: ${productName}\n\nTe contactaremos pronto con más información.`);
   };
 
   return (
@@ -88,35 +54,29 @@ const ProductsScreen: React.FC<ProductsScreenProps> = ({ navigation }) => {
         onBack={() => navigation.goBack()}
       />
       
-      <View style={styles.categories}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {categories.map(category => (
-            <TouchableOpacity
-              key={category.id}
-              style={[
-                styles.categoryButton,
-                selectedCategory === category.id && styles.categoryButtonActive
-              ]}
-              onPress={() => setSelectedCategory(category.id)}
-            >
-              <Text style={[
-                styles.categoryText,
-                selectedCategory === category.id && styles.categoryTextActive
-              ]}>
-                {category.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+      <View style={styles.header}>
+        <Ionicons name="medkit" size={24} color="#2E86C1" />
+        <Text style={styles.headerTitle}>Productos Farmacia</Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.products}>
-        {filteredProducts.map(product => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onAddToCart={handleAddToCart}
-          />
+      <Text style={styles.subtitle}>
+        Consulta por cualquiera de nuestros productos disponibles
+      </Text>
+
+      <ScrollView contentContainerStyle={styles.productsList}>
+        {products.map((product, index) => (
+          <View key={index} style={styles.productItem}>
+            <View style={styles.productInfo}>
+              <Text style={styles.productName}>{product}</Text>
+            </View>
+            <TouchableOpacity 
+              style={styles.consultButton}
+              onPress={() => handleConsult(product)}
+            >
+              <Ionicons name="information-circle-outline" size={16} color="white" />
+              <Text style={styles.consultButtonText}>Consultar</Text>
+            </TouchableOpacity>
+          </View>
         ))}
       </ScrollView>
     </View>
@@ -128,32 +88,66 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8F9F9',
   },
-  categories: {
-    padding: 10,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 15,
     backgroundColor: 'white',
     borderBottomWidth: 1,
     borderBottomColor: '#D5D8DC',
   },
-  categoryButton: {
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginHorizontal: 5,
-    backgroundColor: '#ECF0F1',
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2C3E50',
+    marginLeft: 10,
   },
-  categoryButtonActive: {
-    backgroundColor: '#2E86C1',
-  },
-  categoryText: {
+  subtitle: {
+    fontSize: 14,
     color: '#7F8C8D',
+    textAlign: 'center',
+    padding: 15,
+    backgroundColor: '#F8F9F9',
+  },
+  productsList: {
+    padding: 10,
+  },
+  productItem: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginBottom: 10,
+    padding: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  productInfo: {
+    flex: 1,
+  },
+  productName: {
+    fontSize: 16,
+    color: '#2C3E50',
     fontWeight: '500',
   },
-  categoryTextActive: {
+  consultButton: {
+    backgroundColor: '#2E86C1',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  consultButtonText: {
     color: 'white',
     fontWeight: 'bold',
-  },
-  products: {
-    padding: 10,
+    fontSize: 12,
   },
 });
 

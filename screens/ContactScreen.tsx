@@ -17,12 +17,12 @@ const ContactScreen: React.FC<ContactScreenProps> = ({ navigation }) => {
   };
 
   const sendEmail = () => {
-    Linking.openURL('mailto:janeryjaney@gmail.com?subject=Consulta&body=Hola,%20me%20gustaría%20saber...');
+    Linking.openURL('mailto:sayraavila@gmail.com?subject=Consulta&body=Hola,%20me%20gustaría%20saber...');
   };
+const openMap = () => {
+  Linking.openURL('https://maps.app.goo.gl/bfZdqnkkVREPkGNi9?g_st=aw');
+};
 
-  const openMap = () => {
-    Linking.openURL('https://maps.google.com/?q=Farmap,+Ciudad');
-  };
 
   return (
     <View style={styles.container}>
@@ -76,7 +76,7 @@ const ContactScreen: React.FC<ContactScreenProps> = ({ navigation }) => {
           </View>
           <View style={styles.infoItem}>
             <Ionicons name="mail-outline" size={20} color="#2E86C1" />
-            <Text style={styles.infoText}>Email: janeryjaney@gmail.com</Text>
+            <Text style={styles.infoText}>Email: sayraavila@gmail.com</Text>
           </View>
           <View style={styles.infoItem}>
             <Ionicons name="location-outline" size={20} color="#2E86C1" />

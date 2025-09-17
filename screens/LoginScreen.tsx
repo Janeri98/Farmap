@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
+import React, { useState } from 'react'; 
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView, Image } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
 import Header from '../components/Header';
 
@@ -35,6 +35,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       />
       
       <ScrollView contentContainerStyle={styles.content}>
+        
+        {/* Logo de la farmacia */}
+        <Image 
+          source={require('../assets/logo.png')} // coloca aquí tu logo en assets
+          style={styles.logo}
+          resizeMode="contain"
+        />
+
         <Text style={styles.title}>Bienvenido de nuevo</Text>
         <Text style={styles.subtitle}>Ingresa a tu cuenta</Text>
 
@@ -80,6 +88,12 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
+    alignItems: 'center', // centra el logo y los textos
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 20,
   },
   title: {
     fontSize: 24,
